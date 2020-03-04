@@ -3,16 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0-beta</Version>
+    <Version>1.0.0-beta2</Version>
     <Description>Basic classes for Menu objects. Handles the database structure.</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/statisticssweden/PCAxis.Menu</PackageProjectUrl>
     <RepositoryUrl>https://github.com/statisticssweden/PCAxis.Menu.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>PX</PackageTags>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Strong Name Key.pfx</AssemblyOriginatorKeyFile>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks> <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
   <ItemGroup>
