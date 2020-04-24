@@ -327,7 +327,7 @@ namespace PCAxis.Menu.Implementations
 				{
 					finalSql =
 						@"
-							select * from /*<WITH*/results/*WITH>*/ results
+							select * from /*<WITH*/ results) sss
 							start with case when {0}selection = 'START' then menu else selection end = {0}selection connect by prior selection = menu
 							order siblings by sortcode
 						";
@@ -395,7 +395,7 @@ namespace PCAxis.Menu.Implementations
 
 				if (!sqlHints.Contains(SqlHint.UseNedstedSelect))
 				{
-					sb.Append("with base as ");
+                    sb.Append("select * from (with base as ");
 					sb.Append(baseWith);
 					sb.Append(sqlHints.Contains(SqlHint.UseRecursiveCTE) ? ", PxMenuCTE1 as " : ", selected as ");
 					sb.Append(selectedWith);
