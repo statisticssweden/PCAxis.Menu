@@ -172,7 +172,12 @@ namespace PCAxis.Menu.Implementations
 			/// Gets or sets whether to use nested SQL instead of WITH clause.
 			/// Can only be used together with with UseConnectByPrior.
 			/// </summary>
-			UseNedstedSelect
+			UseNedstedSelect,
+			/// <summary>
+			/// Gets or sets whether to use add an extra select to work around an OracleBug.
+			/// </summary>
+			UseExtraSelect
+
 		}
 
 		/// <summary>
@@ -325,12 +330,24 @@ namespace PCAxis.Menu.Implementations
 
 				if (sqlHints.Contains(SqlHint.UseConnectByPrior))
 				{
-					finalSql =
-						@"
+					if (sqlHints.Contains(SqlHint.UseExtraSelect))
+					{
+						finalSql =
+							@"
 							select * from /*<WITH*/ results) sss
 							start with case when {0}selection = 'START' then menu else selection end = {0}selection connect by prior selection = menu
 							order siblings by sortcode
 						";
+					}
+					else
+					{
+						finalSql =
+							@"
+							select * from /*<WITH*/results/*WITH>*/ results
+							start with case when {0}selection = 'START' then menu else selection end = {0}selection connect by prior selection = menu
+							order siblings by sortcode
+						";
+					}
 				}
 				else
 				{
@@ -395,7 +412,17 @@ namespace PCAxis.Menu.Implementations
 
 				if (!sqlHints.Contains(SqlHint.UseNedstedSelect))
 				{
-                    sb.Append("select * from (with base as ");
+					if (sqlHints.Contains(SqlHint.UseExtraSelect))
+					{
+						sb.Append("select * from (with base as "); 
+					}
+					else
+					{
+						sb.Append("with base as "); 
+					}
+					
+
+
 					sb.Append(baseWith);
 					sb.Append(sqlHints.Contains(SqlHint.UseRecursiveCTE) ? ", PxMenuCTE1 as " : ", selected as ");
 					sb.Append(selectedWith);
